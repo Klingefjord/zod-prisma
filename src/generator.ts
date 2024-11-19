@@ -145,6 +145,11 @@ export const generateSchemaForModel = (
 						.inlineBlock(() => {
 							model.fields
 								.filter((f) => f.kind !== 'object')
+								.filter((f) =>
+									getJSDocs(f.documentation).find((l) =>
+										l.includes('@z.exclude()')
+									)
+								)
 								.forEach((field) => {
 									writeArray(writer, getJSDocs(field.documentation))
 									writer
